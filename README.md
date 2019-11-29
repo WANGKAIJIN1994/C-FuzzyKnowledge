@@ -1,3 +1,12 @@
+# Get googletest
+git clone git@github.com:google/googletest.git
+
+# Googletest static library
+
+
+# Googletest dynamic library
+
+
 # C-FuzzyKnowledge
 some c++ fuzzy knowledge, use googleTest to show it
 

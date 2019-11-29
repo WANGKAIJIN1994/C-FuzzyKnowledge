@@ -1,6 +1,7 @@
 # Googletest
 include/gtest/
 lib
+googletest
 
 # Prerequisites
 *.d
@@ -34,3 +35,4 @@ lib
 *.exe
 *.out
 *.app
+run_test
