@@ -14,7 +14,7 @@ INCLUDES = $(ROOT)/include
 
 LDFLAGS  = $(ROOT)/lib 
 
-LIBS     = -lgtest -lpthread 
+LIBS     = -Wl,-Bstatic -lgtest -Wl,-Bdynamic -lpthread 
 
 #Release
 CXXFLAGS = -Wall -O2
