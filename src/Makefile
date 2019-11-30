@@ -12,20 +12,27 @@ TARGET   = run_test
 
 INCLUDES = $(ROOT)/include
 
-LDFLAGS  = $(ROOT)/lib 
+#static library
+#LDFLAGS  = -L$(ROOT)/lib 
 
-LIBS     = -Wl,-Bstatic -lgtest -Wl,-Bdynamic -lpthread 
+#dynamic library
+LDFLAGS  = -L$(ROOT)/lib -Wl,-rpath=$(ROOT)/lib
+
+#if you have both static and dynamic libraries, should use -Bstatic to link static libray
+#g++ default behavior is link dynamic.
+#LIBS    = -Wl,-Bstatic -lgtest -Wl,-Bdynamic -lpthread 
+LIBS     = -lgtest -lpthread
 
 #Release
-CXXFLAGS = -Wall -O2
+#CXXFLAGS= -Wall -O2
  
 #Debug
-#CPPFLAGS = -Wall -g -O0
+CPPFLAGS = -Wall -g
 
 all : $(TARGET)
 
 $(TARGET) : $(ObjFiles)
-	$(CXX) $^ -o $@ -I$(INCLUDES) -L$(LDFLAGS) $(LIBS)
+	$(CXX) $^ -o $@ -I$(INCLUDES) $(LDFLAGS) $(LIBS)
 
 %.o : %.cpp
 	$(CXX) -c $< -I$(INCLUDES) $(CXXFLAGS)

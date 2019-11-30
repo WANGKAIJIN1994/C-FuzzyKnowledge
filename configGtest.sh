@@ -16,10 +16,10 @@ mkdir buildout
 cd buildout
 
 # build static library
-rm * -rf
-cmake ../
-make 
-cp lib/libgtest* ../../../lib/ -rf
+#rm * -rf
+#cmake ../
+#make 
+#cp lib/libgtest* ../../../lib/ -rf
 
 # build dynamic library
 rm * -rf
