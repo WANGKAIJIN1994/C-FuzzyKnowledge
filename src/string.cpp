@@ -24,3 +24,15 @@ TEST(String, onlyEnds_with)
     EXPECT_EQ(onlyEnds_with("123456", "34"), std::string::npos);
     EXPECT_EQ(onlyEnds_with("123456", "78"), std::string::npos);
 }
+
+TEST(String, char2String)
+{
+    const char* chr = "12345\0hj";
+    EXPECT_EQ(strlen(chr), 5);
+
+    std::string str(chr);
+    EXPECT_EQ(str.size(), 5);
+
+    std::string str1(chr, 8);
+    EXPECT_EQ(str1.size(), 8);
+}
