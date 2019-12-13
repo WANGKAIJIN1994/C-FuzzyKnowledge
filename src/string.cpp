@@ -2,6 +2,8 @@
 #include<iostream>
 #include<string>
 
+#include<boost/algorithm/string.hpp>
+
 std::string::size_type onlyEnds_with(const std::string& str, const std::string& subStr)
 {
     std::string::size_type n = str.find(subStr);
@@ -76,6 +78,21 @@ TEST(String, strtok_r)
 
     char *tmp;
     char *ptr = strtok_r(str, " ", &tmp);
+    EXPECT_EQ(std::string(ptr), "123");
+}
 
-    std::cout << ptr << std::endl;
+TEST(String, ignoreEquals)
+{
+    std::string str1("aBc");
+    std::string str2("Abc");
+
+    EXPECT_EQ(boost::iequals(str1, str2), true);
+}
+
+TEST(String, ignoreStarts)
+{
+    std::string str1("aBcdfgb");
+    std::string str2("Abc");
+
+    EXPECT_EQ(boost::istarts_with(str1, str2), true);
 }
