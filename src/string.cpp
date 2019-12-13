@@ -43,10 +43,9 @@ TEST(String, std_copy_n)
 {
     char* chr = new char[9];
     char chr1[] = { '2', '3', '4', '5', '6', '7', '8', '9', '\0'};
-    std::cout << chr1 << std::endl;
 
     std::copy_n(chr1, 9, chr);
-    std::cout << chr << std::endl;
+    EXPECT_EQ(std::string(chr1), std::string(chr));
 
     delete []chr;
 }
@@ -57,7 +56,7 @@ TEST(String, std_copy_n_INT)
     unsigned char addr[8];
 
     std::copy_n((char*)&interfaceId, sizeof(long), addr);
-    std::cout << *(long*)addr << std::endl;
+    EXPECT_EQ(interfaceId, *(long*)addr);
 }
 
 TEST(String, substr)
@@ -65,11 +64,10 @@ TEST(String, substr)
     std::string str("123456789");//9
 
     std::string::size_type n = str.find("789");//6
-    std::cout << n << std::endl;
+    EXPECT_EQ(n, 6);
 
     std::string substr = str.substr(n + 3);
-    std::cout << substr << std::endl;
-
+    EXPECT_EQ(substr, "");
 }
 
 TEST(String, strtok_r)
