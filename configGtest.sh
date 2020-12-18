@@ -5,15 +5,15 @@ mkdir include
 mkdir lib
 
 # get gtest 
-git clone git@github.com:google/googletest.git
+git clone https://github.com/google/googletest.git
 
 # cp gtest include
-cp googletest/googletest/include/gtest/ include/ -rf
+#cp googletest/googletest/include/gtest/ include/ -rf
 
 # create buildout file
-cd googletest/googletest/
-mkdir buildout
-cd buildout
+cd googletest
+#mkdir buildout
+#cd buildout
 
 # build static library
 #rm * -rf
@@ -22,12 +22,14 @@ cd buildout
 #cp lib/libgtest* ../../../lib/ -rf
 
 # build dynamic library
-rm * -rf
-cmake -DBUILD_SHARED_LIBS=ON ../
+#rm * -rf
+
+cmake -DBUILD_SHARED_LIBS=ON -DCMAKE_INSTALL_PREFIX=./lib  ./
 make
-cp lib/libgtest* ../../../lib/ -rf
+make install
+#cp lib/libgtest* ../../../lib/ -rf
 
 # clear 
-cd ../../../
-rm googletest -rf
+#cd ../../../
+#rm googletest -rf
 
