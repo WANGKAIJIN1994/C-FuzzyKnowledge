@@ -1,6 +1,7 @@
 # Googletest
 include/gtest/
-lib
+include/gmock/
+lib/
 googletest
 
 # Prerequisites
