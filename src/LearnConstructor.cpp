@@ -26,7 +26,7 @@ public:
         cout << "const copy constructor " << _test << endl;
     }
 
-    explicit LearnConstructor(LearnConstructor&& s)
+    explicit LearnConstructor(/*const*/ LearnConstructor&& s)
     {
         _test = move(s.getTest());
         cout << "move constructor " << _test << endl;
@@ -35,14 +35,14 @@ public:
     LearnConstructor& operator=(LearnConstructor& s)
     {
         _test = s.getTest();
-        cout << "assign constructor " << _test << endl;
+        cout << "assign " << _test << endl;
         return *this;
     }
 
-    LearnConstructor& operator=(const LearnConstructor& s)
+    LearnConstructor& operator=(/*const*/ LearnConstructor&& s)
     {
-        _test = s.getTest();
-        cout << "move constructor " << _test << endl;
+        _test = move(s.getTest());
+        cout << " move assign " << _test << endl;
         return *this;
     }
 
@@ -57,30 +57,33 @@ private:
 
 TEST(LearnConstruct, move)
 {
-    cout << "*******l1*********" << endl;
+    cout << "*******LearnConstructor l1(\"l1\")*********" << endl;
     LearnConstructor l1("l1");
 
-    cout << "*******l2*********" << endl;
+    cout << "*******const LearnConstructor l2(\"l2\")*********" << endl;
     const LearnConstructor l2("l2");
 
-    cout << "*******l3*********" << endl;
+    cout << "*******LearnConstructor l3(l1)*********" << endl;
     LearnConstructor l3(l1);
 
-    cout << "*******l4*********" << endl;
+    cout << "*******LearnConstructor l4(l2)*********" << endl;
     LearnConstructor l4(l2);
 
-    cout << "*******l5*********" << endl;
+    cout << "*******LearnConstructor l5 = l1*********" << endl;
     LearnConstructor l5 = l1;
 
-    cout << "*******l6*********" << endl;
+    cout << "*******LearnConstructor l6 = l2*********" << endl;
     LearnConstructor l6 = l2;
 
-    cout << "*******l7*********" << endl;
+    cout << "*******LearnConstructor l7(move(l1))*********" << endl;
     LearnConstructor l7(move(l1));
 
-    cout << "*******l8*********" << endl;
+    cout << "*******LearnConstructor l8(move(l2)),(call const LearnConstructor&& s, if exist)*********" << endl;
     LearnConstructor l8(move(l2));
 
-    cout << "*******l9*********" << endl;
-        l4 = l3;
+    cout << "*******l4 = l3*********" << endl;
+    l4 = l3;
+
+    cout << "*******l4 = move(l3)*********" << endl;
+    l4 = move(l3);
 }
