@@ -51,8 +51,32 @@ public:
         return _test;
     }
 
+    virtual LearnConstructor& show()
+    {
+        cout << "show " << _test << endl;
+        return *this;
+    }
+
+    virtual ~LearnConstructor() = default;
+
 private:
     string _test;
+};
+
+
+class Derived : public LearnConstructor
+{
+public:
+    explicit Derived(const std::string& s) : LearnConstructor(s)
+    {
+        cout << "Derived constructor" << endl;
+    }
+
+    Derived& show() override
+    {
+        cout << "Derived show " << this->getTest() << endl;
+        return *this;
+    }
 };
 
 TEST(LearnConstruct, move)
@@ -86,4 +110,16 @@ TEST(LearnConstruct, move)
 
     cout << "*******l4 = move(l3)*********" << endl;
     l4 = move(l3);
+}
+
+TEST(Derived, override)
+{
+    LearnConstructor l1("LearnConstructor");
+    Derived d1("Derived");
+
+    LearnConstructor& base1(l1);
+    LearnConstructor& base2(d1);
+
+    base1.show();
+    base2.show();
 }
