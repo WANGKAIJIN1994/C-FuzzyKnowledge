@@ -62,6 +62,33 @@ public:
     }
 };
 
+template<typename T>
+void expansion(Base& b, T&& t)
+{
+    cout << "expansion: " << t << endl;
+    b.set(forward<T>(t));
+};
+
+template<typename T, typename... Args>
+void expansion(Base& b, T&& t, Args&&... args)
+{
+    cout << "expansion: " << t << endl;
+    cout << "args... size is: " << sizeof...(args) << endl; 
+
+    b.set(forward<T>(t));
+    expansion(b, forward<Args>(args)...);
+};
+
+class ArbitraryRecursion : public Base
+{
+public:
+    template<typename... Args>
+    ArbitraryRecursion(Args&&... args)
+    {
+        expansion(*this, forward<Args>(args)...);        
+    }
+};
+
 TEST(smartUsage, arbitraryComma)
 {
     ArbitraryComma data1 {5, (float)6.5, string("data1"), false};
@@ -71,6 +98,14 @@ TEST(smartUsage, arbitraryComma)
     data2.showAll();
 }
 
+TEST(smartUsage, arbitratyRecursion)
+{
+    ArbitraryRecursion data1(5, (float)4.3, false, string("data1"));
+    data1.showAll();
+
+    ArbitraryRecursion data2 {true, 5, string("data2")};
+    data2.showAll();
+}
 
 
 
