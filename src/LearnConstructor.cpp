@@ -8,19 +8,24 @@ using namespace std;
 class LearnConstructor
 {
 public:
+    LearnConstructor()
+    {
+        cout << "no args constructor" << endl;
+    }
+
     explicit LearnConstructor(const string& s)
     {
         _test = s;
         cout << "constructor " << _test << endl;
     }
 
-    /*explicit*/ LearnConstructor(LearnConstructor& s)
+    LearnConstructor(LearnConstructor& s)
     {
         _test = s.getTest();
         cout << "copy constructor " << _test << endl;
     }
 
-    /*explicit*/ LearnConstructor(const LearnConstructor& s)
+    LearnConstructor(const LearnConstructor& s)
     {
         _test = s.getTest();
         cout << "const copy constructor " << _test << endl;
@@ -79,6 +84,25 @@ public:
     }
 };
 
+class TestArgs
+{
+public:
+    int number1;
+    int number2;
+    LearnConstructor learnConstructor;
+
+    TestArgs(int number, LearnConstructor learnConstructor) : number2(number), number1(number2), learnConstructor(learnConstructor)
+    {
+        cout << "TestArgs::constructor number1:" << number1 << ", number2:" << number2 << endl;
+    }
+
+    TestArgs(LearnConstructor learnConstructor)
+    {
+        learnConstructor = learnConstructor;
+        cout << "TestArgs::constructor" << endl;
+    }
+};
+
 TEST(LearnConstruct, move)
 {
     cout << "*******LearnConstructor l1(\"l1\")*********" << endl;
@@ -122,4 +146,15 @@ TEST(Derived, override)
 
     base1.show();
     base2.show();
+}
+
+TEST(LearnConstruct, TestArgs)
+{
+    LearnConstructor l0;
+
+    cout << "********begin test Parameter initialization list******" << endl;
+    TestArgs test(10, l0);
+
+    cout << "********begin test assign******" << endl;
+    TestArgs test1(l0);
 }
